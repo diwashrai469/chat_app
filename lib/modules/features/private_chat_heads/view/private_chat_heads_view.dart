@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:chat_app/common/constant/app_dimens.dart';
 import 'package:chat_app/common/constant/ui_helpers.dart';
+import 'package:chat_app/core/services/local_storage.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -19,6 +20,11 @@ class PrivateChatHeadsView extends StatelessWidget {
         ),
         body: Column(
           children: [
+            ElevatedButton(
+                onPressed: () {
+                  LocalStorageService().clear("acessToken");
+                },
+                child: Text("clear token")),
             sHeightSpan,
             Expanded(
               child: ListView.builder(

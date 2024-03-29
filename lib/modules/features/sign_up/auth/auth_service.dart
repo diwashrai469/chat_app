@@ -3,6 +3,7 @@ import 'package:chat_app/core/routes/app_routes.gr.dart';
 import 'package:chat_app/core/services/local_storage.dart';
 import 'package:chat_app/core/services/toast_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -58,6 +59,29 @@ class AuthService {
       }
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      if (googleAuth?.accessToken != null) {
+        GoogleAuthProvider.credential(
+          accessToken: googleAuth!.accessToken,
+          idToken: googleAuth.idToken,
+        );
+        _appRoutes.pushAndPopUntil(
+          const PrivateChatHeadsView(),
+          predicate: (route) => false,
+        );
+
+        _localStorageService.write("acessToken", googleAuth.accessToken);
+      }
+    } on Exception catch (e) {
+      print('exception->$e');
     }
   }
 }
