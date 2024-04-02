@@ -5,6 +5,7 @@ import 'package:chat_app/core/services/toast_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 @injectable
 class AuthService {
@@ -17,18 +18,29 @@ class AuthService {
   signUpUser(
     String email,
     String password,
+    String name,
   ) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
       );
-      _appRoutes.pushAndPopUntil(
-        const LoginView(),
-        predicate: (route) => false,
-      );
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('users');
+      await users.add({
+        'name': name,
+        'email': email,
+        'id': userCredential.user?.uid,
+        'profile_picture': ''
+      }).then((value) async {
+        await userCredential.user?.updateDisplayName(name);
+        _appRoutes.pushAndPopUntil(
+          const LoginView(),
+          predicate: (route) => false,
+        );
 
-      _toastService.s("User created sucessfully!");
+        _toastService.s("User created sucessfully!");
+      });
     } on FirebaseAuthException catch (e) {
       _toastService.e(e.toString());
     }
@@ -39,14 +51,12 @@ class AuthService {
     required String password,
   }) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
       final acessToken = await FirebaseAuth.instance.currentUser?.getIdToken();
-      _localStorageService.write('acessToken', acessToken);
+      _localStorageService.write(LocalStorageKeys.accessToken, acessToken);
       _appRoutes.pushAndPopUntil(
-        const PrivateChatHeadsView(),
+        const PrivateChatView(),
         predicate: (route) => false,
       );
     } on FirebaseAuthException catch (e) {
@@ -74,7 +84,7 @@ class AuthService {
           idToken: googleAuth.idToken,
         );
         _appRoutes.pushAndPopUntil(
-          const PrivateChatHeadsView(),
+          const PrivateChatView(),
           predicate: (route) => false,
         );
 

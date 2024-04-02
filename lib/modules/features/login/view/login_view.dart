@@ -6,7 +6,7 @@ import 'package:chat_app/common/widgets/k_textformfield.dart';
 import 'package:chat_app/core/injection/injection.dart';
 import 'package:chat_app/core/routes/app_routes.dart';
 import 'package:chat_app/core/routes/app_routes.gr.dart';
-import 'package:chat_app/modules/features/sign_up/auth/auth_service.dart';
+import 'package:chat_app/modules/features/sign_up/view_model/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()

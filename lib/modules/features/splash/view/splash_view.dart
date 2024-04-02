@@ -19,13 +19,13 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     final localStorage = locator<LocalStorageService>();
     final appRoutes = locator<AppRoutes>();
-    String? acessToken = localStorage.read("acessToken");
+    String? acessToken = localStorage.read(LocalStorageKeys.accessToken);
     Future.delayed(
       const Duration(seconds: 3),
       () {
         if (acessToken?.isNotEmpty == true) {
           appRoutes.pushAndPopUntil(
-            const PrivateChatHeadsView(),
+            const PrivateChatView(),
             predicate: (route) => false,
           );
         } else {

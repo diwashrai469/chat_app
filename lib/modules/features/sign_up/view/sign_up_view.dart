@@ -4,7 +4,7 @@ import 'package:chat_app/common/constant/ui_helpers.dart';
 import 'package:chat_app/common/widgets/k_button.dart';
 import 'package:chat_app/common/widgets/k_textformfield.dart';
 import 'package:chat_app/core/injection/injection.dart';
-import 'package:chat_app/modules/features/sign_up/auth/auth_service.dart';
+import 'package:chat_app/modules/features/sign_up/view_model/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -17,6 +17,7 @@ class SignUpView extends StatefulWidget {
 
 class _SignUpViewState extends State<SignUpView> {
   TextEditingController emailController = TextEditingController();
+  TextEditingController fullnameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   bool isloading = false;
@@ -39,6 +40,12 @@ class _SignUpViewState extends State<SignUpView> {
               ),
               lHeightSpan,
               KTextFormField(
+                controller: fullnameController,
+                label: "Fullname",
+                hint: 'Enter your Fullname',
+              ),
+              mHeightSpan,
+              KTextFormField(
                 controller: emailController,
                 label: "Email",
                 hint: 'Enter your email',
@@ -50,13 +57,6 @@ class _SignUpViewState extends State<SignUpView> {
                 label: "Password",
                 hint: 'Enter your password',
               ),
-              mHeightSpan,
-              KTextFormField(
-                obscureText: true,
-                controller: confirmPasswordController,
-                hint: 'Enter your confirm password',
-                label: "Confirm Password",
-              ),
               lHeightSpan,
               KButton(
                 isBusy: isloading,
@@ -67,8 +67,8 @@ class _SignUpViewState extends State<SignUpView> {
                     () {
                       isloading = true;
                       authService
-                          .signUpUser(
-                              emailController.text, passwordController.text)
+                          .signUpUser(emailController.text,
+                              passwordController.text, fullnameController.text)
                           .then(
                             (value) => setState(
                               () {

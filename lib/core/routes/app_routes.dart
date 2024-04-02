@@ -15,7 +15,10 @@ class AppRoutes extends $AppRoutes {
         ),
         AutoRoute(page: SplashView.page, initial: true),
         AutoRoute(
-          page: PrivateChatHeadsView.page,
+          page: PrivateChatView.page,
+        ),
+        AutoRoute(
+          page: ChatListView.page,
         ),
       ];
 }
