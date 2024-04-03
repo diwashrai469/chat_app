@@ -20,5 +20,6 @@ class AppRoutes extends $AppRoutes {
         AutoRoute(
           page: ChatListView.page,
         ),
+        AutoRoute(page: MyProfileView.page)
       ];
 }

@@ -11,6 +11,8 @@
 import 'package:chat_app/core/routes/app_routes.dart' as _i3;
 import 'package:chat_app/core/services/local_storage.dart' as _i4;
 import 'package:chat_app/core/services/toast_services.dart' as _i6;
+import 'package:chat_app/modules/features/my_profile/view_model/my_profile_view_model.dart'
+    as _i8;
 import 'package:chat_app/modules/features/private_chat/view_model/cubit/private_chat_cubit.dart'
     as _i5;
 import 'package:chat_app/modules/features/sign_up/view_model/auth/auth_service.dart'
@@ -38,6 +40,8 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i3.AppRoutes>(),
           gh<_i4.LocalStorageService>(),
         ));
+    gh.factory<_i8.MyProfileViewModel>(
+        () => _i8.MyProfileViewModel(gh<_i6.ToastService>()));
     return this;
   }
 }

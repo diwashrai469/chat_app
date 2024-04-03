@@ -25,22 +25,29 @@ class AuthService {
         email: email.trim(),
         password: password.trim(),
       );
+
       CollectionReference users =
           FirebaseFirestore.instance.collection('users');
-      await users.add({
+
+      DocumentReference newUserRef = await users.add({
         'name': name,
         'email': email,
         'id': userCredential.user?.uid,
+        'documentId': "",
         'profile_picture': ''
-      }).then((value) async {
-        await userCredential.user?.updateDisplayName(name);
-        _appRoutes.pushAndPopUntil(
-          const LoginView(),
-          predicate: (route) => false,
-        );
-
-        _toastService.s("User created sucessfully!");
       });
+
+      await newUserRef.update({
+        'documentId': newUserRef.id,
+      });
+
+      await userCredential.user?.updateDisplayName(name);
+      _appRoutes.pushAndPopUntil(
+        const LoginView(),
+        predicate: (route) => false,
+      );
+
+      _toastService.s("User created successfully!");
     } on FirebaseAuthException catch (e) {
       _toastService.e(e.toString());
     }

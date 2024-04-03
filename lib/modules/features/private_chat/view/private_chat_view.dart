@@ -5,7 +5,6 @@ import 'package:chat_app/common/widgets/k_loading_indicator.dart';
 import 'package:chat_app/core/injection/injection.dart';
 import 'package:chat_app/core/routes/app_routes.dart';
 import 'package:chat_app/core/routes/app_routes.gr.dart';
-import 'package:chat_app/core/services/local_storage.dart';
 import 'package:chat_app/modules/features/private_chat/view_model/cubit/private_chat_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,11 +16,30 @@ class PrivateChatView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Chats",
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              fontSize: AppDimens.headlineFontSizeSmall, color: Colors.white),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100.0),
+        child: AppBar(
+          centerTitle: false,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(25),
+            ),
+          ),
+          title: Text(
+            "Hello",
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontSize: AppDimens.headlineFontSizeSmall, color: Colors.white),
+          ),
+          actions: [
+            GestureDetector(
+              onTap: () => locator<AppRoutes>().push(const MyProfileView()),
+              child: const CircleAvatar(
+                radius: 25,
+                child: Icon(Icons.person),
+              ),
+            ),
+            lWidthSpan,
+          ],
         ),
       ),
       body: BlocProvider(
@@ -33,12 +51,6 @@ class PrivateChatView extends StatelessWidget {
             } else if (state is PrivateChatLoadedState) {
               return Column(
                 children: [
-                  ElevatedButton(
-                      onPressed: () async {
-                        await LocalStorageService()
-                            .clear(LocalStorageKeys.accessToken);
-                      },
-                      child: const Text("clear token")),
                   sHeightSpan,
                   Expanded(
                     child: ListView.builder(
@@ -52,6 +64,7 @@ class PrivateChatView extends StatelessWidget {
                             minVerticalPadding: 10,
                             leading: const CircleAvatar(
                               radius: 40,
+                              child: Icon(Icons.person),
                             ),
                             title: Text(users[index]['name'].toString()),
                             subtitle: Text(users[index]['email'].toString()),
