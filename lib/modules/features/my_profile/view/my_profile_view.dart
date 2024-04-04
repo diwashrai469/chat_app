@@ -44,11 +44,9 @@ class MyProfileView extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: kLoadingIndicator(context: context),
-            ); // Display a loading indicator while waiting for data
+            );
           } else if (snapshot.hasData) {
-            // Extract user data from the snapshot
             List<dynamic> userData = snapshot.data;
-            // Assuming userData is a list of user details, modify the UI to display them
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Column(

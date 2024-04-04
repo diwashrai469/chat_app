@@ -34,6 +34,7 @@ abstract class $AppRoutes extends _i7.RootStackRouter {
           key: args.key,
           uid: args.uid,
           name: args.name,
+          profilePicture: args.profilePicture,
         ),
       );
     },
@@ -77,6 +78,7 @@ class ChatListView extends _i7.PageRouteInfo<ChatListViewArgs> {
     _i8.Key? key,
     required String uid,
     required String name,
+    required String profilePicture,
     List<_i7.PageRouteInfo>? children,
   }) : super(
           ChatListView.name,
@@ -84,6 +86,7 @@ class ChatListView extends _i7.PageRouteInfo<ChatListViewArgs> {
             key: key,
             uid: uid,
             name: name,
+            profilePicture: profilePicture,
           ),
           initialChildren: children,
         );
@@ -99,6 +102,7 @@ class ChatListViewArgs {
     this.key,
     required this.uid,
     required this.name,
+    required this.profilePicture,
   });
 
   final _i8.Key? key;
@@ -107,9 +111,11 @@ class ChatListViewArgs {
 
   final String name;
 
+  final String profilePicture;
+
   @override
   String toString() {
-    return 'ChatListViewArgs{key: $key, uid: $uid, name: $name}';
+    return 'ChatListViewArgs{key: $key, uid: $uid, name: $name, profilePicture: $profilePicture}';
   }
 }
 

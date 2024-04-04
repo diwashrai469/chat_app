@@ -10,5 +10,7 @@ final class PrivateChatErrorState extends PrivateChatState {}
 
 class PrivateChatLoadedState extends PrivateChatState {
   List allUserData;
-  PrivateChatLoadedState({required this.allUserData});
+  List currentUserData;
+  PrivateChatLoadedState(
+      {required this.allUserData, required this.currentUserData});
 }

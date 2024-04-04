@@ -24,7 +24,12 @@ class PrivateChatCubit extends Cubit<PrivateChatState> {
       final filterdata = allData
           .where((element) => element['id'] != _firebaseAuth.currentUser?.uid)
           .toList();
-      emit(PrivateChatLoadedState(allUserData: filterdata));
+
+      final currentUserdata = allData
+          .where((element) => element['id'] == _firebaseAuth.currentUser?.uid)
+          .toList();
+      emit(PrivateChatLoadedState(
+          allUserData: filterdata, currentUserData: currentUserdata));
     } catch (e) {
       emit(PrivateChatErrorState());
       print("Error fetching users: $e");

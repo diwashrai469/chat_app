@@ -17,7 +17,6 @@ const lightPrimaryColor = Color(0xFFF2EBFC);
 const chatMessageTextColor = Color.fromARGB(255, 87, 83, 83);
 const disabledColor = Color(0xFFbcbcbc);
 const primaryColor = Color.fromRGBO(120, 145, 86, 1);
-const lightPrimaryCplor = Color(0xFFa0a6ff);
 const secondaryColor = Color(0xFF2d3032);
 const darkErrorColor = Color(0xFFC11414);
 const cardColor = Color(0xFF2d3032);
